@@ -38,6 +38,10 @@ func (server *server) metrics(address string) {
 			</body>
 			</html>`))
 	})
-	http.Handle("/metrics", promhttp.Handler())
+	handler := promhttp.Handler()
+	http.Handle("/metrics", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		opsBacklogSize.Set(float64(len(server.backlog)))
+		handler.ServeHTTP(w, r)
+	}))
 	log.Println(http.ListenAndServe(address, nil))
 }

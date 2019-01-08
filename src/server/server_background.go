@@ -15,7 +15,6 @@ func (server *server) background() {
 		for block.Reserve(); ; {
 			select {
 			case request := <-server.backlog:
-				opsBacklogSize.Add(-1)
 				block.NumRows++
 				block.WriteString(0, *request.Hostname)
 				block.WriteString(1, *request.Schema)

@@ -18,7 +18,7 @@ var (
 func init() {
 	flag.StringVar(&options.DSN, "dsn", "native://127.0.0.1:9000", "ClickHouse DSN")
 	flag.StringVar(&options.Address, "addr", ":30002", "listen address")
-	flag.StringVar(&options.MetricsAddress, "metrics_addr", ":2112", "Prometheus exporter address")
+	flag.StringVar(&options.MetricsAddress, "metrics_addr", ":2112", "Address on which to expose metrics")
 	flag.IntVar(&options.BacklogSize, "backlog", 100000, "backlog size")
 	flag.IntVar(&options.Concurrency, "concurrency", 2, "number of the background processes")
 }

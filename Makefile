@@ -12,4 +12,8 @@ build:
 	@file  .build/proton
 	@du -h .build/proton
 
+deb: build
+	@nfpm pkg --target .build/proton-server.deb
+	@dpkg-deb -I .build/proton-server.deb
+
 .PHONY: proto

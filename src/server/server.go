@@ -97,7 +97,6 @@ func (server *server) listen(conn net.PacketConn) {
 				}
 				select {
 				case server.backlog <- container:
-					opsBacklogSize.Add(1)
 				default:
 					log.Println("backlog is full")
 				}
