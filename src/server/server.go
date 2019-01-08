@@ -19,7 +19,7 @@ func RunServer(options Options) error {
 	if err != nil {
 		return err
 	}
-	log.Printf("listen=[%s], concurrency=%d", options.Address, options.Concurrency)
+	log.Printf("Proton server listen UDP [%s], Prometheus exporter [%s] concurrency: %d", options.Address, options.MetricsAddress, options.Concurrency)
 	server := server{
 		dsn:         options.DSN,
 		backlog:     make(chan requestContainer, options.BacklogSize),
@@ -28,13 +28,16 @@ func RunServer(options Options) error {
 	if err := server.prepare(); err != nil {
 		return err
 	}
+	go server.metrics(options.MetricsAddress)
 	for i := 0; i < options.Concurrency; i++ {
 		go server.listen(conn)
 		go server.background()
 	}
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, syscall.SIGINT, syscall.SIGTERM)
-	log.Printf("stopped signal[%s]", <-signals)
+	{
+		log.Printf("stopped signal[%s]", <-signals)
+	}
 	return nil
 }
 
@@ -94,6 +97,7 @@ func (server *server) listen(conn net.PacketConn) {
 				}
 				select {
 				case server.backlog <- container:
+					opsBacklogSize.Add(1)
 				default:
 					log.Println("backlog is full")
 				}

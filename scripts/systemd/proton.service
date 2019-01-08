@@ -6,7 +6,7 @@ After=network-online.target
 [Service]
 Type=simple
 
-ExecStart=/opt/bin/proton -addr=":30002" -dsn="native://127.0.0.1:9000" -backlog=100000 -concurrency=2
+ExecStart=/opt/proton/bin/proton-server -addr=":30002" -dsn="native://127.0.0.1:9000" -backlog=100000 -concurrency=2
 
 Restart=always
 RestartSec=10

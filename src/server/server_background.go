@@ -15,6 +15,7 @@ func (server *server) background() {
 		for block.Reserve(); ; {
 			select {
 			case request := <-server.backlog:
+				opsBacklogSize.Add(-1)
 				block.NumRows++
 				block.WriteString(0, *request.Hostname)
 				block.WriteString(1, *request.Schema)
@@ -55,7 +56,10 @@ func (server *server) write(block *data.Block) error {
 	if block.NumRows == 0 {
 		return nil
 	}
-	conn, err := server.connection()
+	var (
+		numRows   = block.NumRows
+		conn, err = server.connection()
+	)
 	if err != nil {
 		return err
 	}
@@ -66,6 +70,7 @@ func (server *server) write(block *data.Block) error {
 	if err = conn.WriteBlock(block); err != nil {
 		return server.releaseConn(conn, err)
 	}
+	opsProcessed.Add(float64(numRows))
 	return server.releaseConn(conn, conn.Commit())
 }
 

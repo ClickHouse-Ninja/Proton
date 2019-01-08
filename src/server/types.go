@@ -7,10 +7,11 @@ import (
 )
 
 type Options struct {
-	DSN         string
-	Address     string
-	BacklogSize int
-	Concurrency int
+	DSN            string
+	Address        string
+	MetricsAddress string
+	BacklogSize    int
+	Concurrency    int
 }
 
 type requestContainer struct {

@@ -1,0 +1,22 @@
+# nfpm example config file
+name: "proton-server"
+arch: "amd64"
+platform: "linux"
+version: "v0.1"
+section: "default"
+priority: "extra"
+maintainer: "Kirill Shvakov <to@clickhouse.ninja>"
+description: "Proton - high performance Pinba storage server."
+vendor: "ClickHouse-Ninja"
+homepage: "https://github.com/ClickHouse-Ninja/Proton"
+license: "MIT"
+bindir: "/opt/proton/bin"
+files:
+  ./.build/proton: "/opt/proton/bin/proton-server"
+config_files:
+  ./scripts/systemd/proton.service: "/etc/systemd/system/proton-server.service"
+overrides:
+  deb:
+    scripts:
+      postinstall: ./scripts/postinstall.sh
+      preremove: ./scripts/preremove.sh

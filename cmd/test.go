@@ -20,7 +20,7 @@ func main() {
 		},
 	}
 
-	for i := 0; i < 500000; i++ {
+	for i := 0; i < 50000000; i++ {
 		req.Hostname = "hostname"
 		req.ServerName = "servername"
 		req.ScriptName = "scriptname"

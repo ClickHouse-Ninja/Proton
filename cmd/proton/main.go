@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"runtime"
 
 	"github.com/ClickHouse-Ninja/Proton/src/server"
 )
@@ -18,10 +17,12 @@ var (
 
 func init() {
 	flag.StringVar(&options.DSN, "dsn", "native://127.0.0.1:9000", "ClickHouse DSN")
-	flag.StringVar(&options.Address, "addr", "127.0.0.1:30002", "listen address")
+	flag.StringVar(&options.Address, "addr", ":30002", "listen address")
+	flag.StringVar(&options.MetricsAddress, "metrics_addr", ":2112", "Prometheus exporter address")
 	flag.IntVar(&options.BacklogSize, "backlog", 100000, "backlog size")
-	flag.IntVar(&options.Concurrency, "concurrency", runtime.NumCPU(), "number of the background processes")
+	flag.IntVar(&options.Concurrency, "concurrency", 2, "number of the background processes")
 }
+
 func main() {
 	flag.Usage = func() {
 		fmt.Println("NAME:")
