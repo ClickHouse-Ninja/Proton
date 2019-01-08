@@ -71,7 +71,7 @@ func (server *server) write(block *data.Block) error {
 
 const (
 	insertSQL = `
-	INSERT INTO proton.request (
+	INSERT INTO proton.requests (
 		Hostname
 		, Schema
 		, Status

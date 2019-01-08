@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS proton;
 
-CREATE TABLE IF NOT EXISTS proton.request (
+CREATE TABLE IF NOT EXISTS proton.requests (
     Hostname          String
     , Schema          String
     , Status          Int16
