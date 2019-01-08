@@ -1,0 +1,18 @@
+[Unit]
+Description=Proton - high performance Pinba storage server.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+
+ExecStart=/opt/bin/proton -addr=":30002" -dsn="native://127.0.0.1:9000" -backlog=100000 -concurrency=2
+
+Restart=always
+RestartSec=10
+
+MemoryLimit=500M
+MemoryAccounting=true
+
+[Install]
+WantedBy=multi-user.target

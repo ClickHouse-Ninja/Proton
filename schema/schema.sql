@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS proton.request (
     , Status          Int16
     , ServerName      String
     , ScriptName      String
-    , RequestCount    Int64
+    , RequestCount    UInt32
     , RequestTime     Float32
     , DocumentSize    UInt32
     , MemoryPeak      UInt32
@@ -27,5 +27,7 @@ CREATE TABLE IF NOT EXISTS proton.request (
     )
     , Timestamp DateTime
 ) Engine = MergeTree
-PARTITION BY tuple()
-ORDER     BY tuple();
+PARTITION BY toMonday(Timestamp)
+ORDER     BY (
+    Timestamp
+);
