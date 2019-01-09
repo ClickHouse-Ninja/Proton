@@ -28,6 +28,7 @@ func RunServer(options Options) error {
 	if err := server.prepare(); err != nil {
 		return err
 	}
+	opsConcurrency.Set(float64(options.Concurrency))
 	go server.metrics(options.MetricsAddress)
 	for i := 0; i < options.Concurrency; i++ {
 		go server.listen(conn)
