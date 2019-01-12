@@ -31,3 +31,11 @@ PARTITION BY toMonday(Timestamp)
 ORDER     BY (
     Timestamp
 );
+
+CREATE TABLE IF NOT EXISTS proton.dictionary (
+    ID       UInt64
+    , Value  String
+    , Column String
+) Engine ReplacingMergeTree
+PARTITION BY Column
+ORDER     BY ID;
