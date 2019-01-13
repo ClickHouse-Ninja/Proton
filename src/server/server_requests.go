@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/kshvakov/clickhouse"
-	"github.com/kshvakov/clickhouse/lib/data"
 )
 
 func (server *server) background() {
@@ -45,36 +44,15 @@ func (server *server) background() {
 				break loop
 			}
 		}
-		if err := server.write(block); err != nil {
-			log.Println("write ", err)
+		opsReqProcessed.Add(float64(block.NumRows))
+		if err := server.writeBlock(insertIntoRequestsSQL, block); err != nil {
+			log.Println("request write error: ", err)
 		}
 	}
 }
 
-func (server *server) write(block *data.Block) error {
-	if block.NumRows == 0 {
-		return nil
-	}
-	var (
-		numRows   = block.NumRows
-		conn, err = server.connection()
-	)
-	if err != nil {
-		return err
-	}
-	conn.Begin()
-	if _, err = conn.Prepare(insertSQL); err != nil {
-		return server.releaseConn(conn, err)
-	}
-	if err = conn.WriteBlock(block); err != nil {
-		return server.releaseConn(conn, err)
-	}
-	opsProcessed.Add(float64(numRows))
-	return server.releaseConn(conn, conn.Commit())
-}
-
 const (
-	insertSQL = `
+	insertIntoRequestsSQL = `
 	INSERT INTO proton.requests (
 		Hostname
 		, Schema

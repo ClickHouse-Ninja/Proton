@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	opsProcessed = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "proton_server_processed_events_total",
-		Help: "The total number of processed events",
+	opsReqProcessed = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "proton_server_requests_total",
+		Help: "The total number of processed requests",
 	})
 	opsBacklogCap = promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "proton_server_backlog_cap",

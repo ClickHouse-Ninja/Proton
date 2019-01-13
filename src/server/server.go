@@ -11,6 +11,7 @@ import (
 
 	"github.com/ClickHouse-Ninja/Proton/proto/pinba"
 	"github.com/kshvakov/clickhouse"
+	"github.com/kshvakov/clickhouse/lib/cityhash102"
 	"github.com/kshvakov/clickhouse/lib/data"
 )
 
@@ -23,13 +24,18 @@ func RunServer(options Options) error {
 	server := server{
 		dsn:         options.DSN,
 		backlog:     make(chan requestContainer, options.BacklogSize),
+		dictBacklog: make(chan dict, 1000),
 		connections: make(chan clickhouse.Clickhouse, options.Concurrency),
 	}
-	if err := server.prepare(); err != nil {
+	if server.block, err = server.prepareBlock(insertIntoRequestsSQL); err != nil {
+		return err
+	}
+	if server.dictBlock, err = server.prepareBlock(insertIntoDictionarySQL); err != nil {
 		return err
 	}
 	opsConcurrency.Set(float64(options.Concurrency))
 	go server.metrics(options.MetricsAddress)
+	go server.backgroundDictionary()
 	for i := 0; i < options.Concurrency; i++ {
 		go server.listen(conn)
 		go server.background()
@@ -45,24 +51,44 @@ func RunServer(options Options) error {
 type server struct {
 	dsn         string
 	block       *data.Block
+	dictBlock   *data.Block
 	backlog     chan requestContainer
+	dictBacklog chan dict
 	connections chan clickhouse.Clickhouse
 }
 
-func (server *server) prepare() error {
+func (server *server) prepareBlock(sql string) (block *data.Block, _ error) {
+	conn, err := server.connection()
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+	conn.Begin()
+	if _, err = conn.Prepare(sql); err != nil {
+		return nil, err
+	}
+	if block, err = conn.Block(); err != nil {
+		return nil, err
+	}
+	return block, nil
+}
+
+func (server *server) writeBlock(sql string, block *data.Block) error {
+	if block.NumRows == 0 {
+		return nil
+	}
 	conn, err := server.connection()
 	if err != nil {
 		return err
 	}
-	defer conn.Close()
 	conn.Begin()
-	if _, err = conn.Prepare(insertSQL); err != nil {
-		return err
+	if _, err = conn.Prepare(sql); err != nil {
+		return server.releaseConnection(conn, err)
 	}
-	if server.block, err = conn.Block(); err != nil {
-		return err
+	if err = conn.WriteBlock(block); err != nil {
+		return server.releaseConnection(conn, err)
 	}
-	return nil
+	return server.releaseConnection(conn, conn.Commit())
 }
 
 func (server *server) connection() (clickhouse.Clickhouse, error) {
@@ -74,7 +100,7 @@ func (server *server) connection() (clickhouse.Clickhouse, error) {
 	}
 }
 
-func (server *server) releaseConn(conn clickhouse.Clickhouse, err error) error {
+func (server *server) releaseConnection(conn clickhouse.Clickhouse, err error) error {
 	if err == nil {
 		select {
 		case server.connections <- conn:
@@ -87,7 +113,10 @@ func (server *server) releaseConn(conn clickhouse.Clickhouse, err error) error {
 }
 
 func (server *server) listen(conn net.PacketConn) {
-	var buffer [math.MaxUint16]byte
+	var (
+		buffer [math.MaxUint16]byte
+		dictID = make(map[uint64]struct{}, 1000)
+	)
 	for {
 		var request pinba.Request
 		if ln, _, err := conn.ReadFrom(buffer[:]); err == nil {
@@ -101,7 +130,32 @@ func (server *server) listen(conn net.PacketConn) {
 				default:
 					log.Println("backlog is full")
 				}
+				for _, tuple := range [][]string{
+					{"Schema", container.Schema()},
+					{"Hostname", container.Hostname()},
+					{"ServerName", container.ServerName()},
+					{"ScriptName", container.ScriptName()},
+				} {
+					id := cityHash64(tuple[1])
+					if _, exists := dictID[id]; !exists {
+						dictID[id] = struct{}{}
+						select {
+						case server.dictBacklog <- dict{
+							id:     id,
+							value:  tuple[1],
+							column: tuple[0],
+						}:
+						default:
+						}
+					}
+				}
 			}
 		}
 	}
+}
+
+func cityHash64(str string) uint64 {
+	cityhash := cityhash102.New64()
+	cityhash.Write([]byte(str))
+	return cityhash.Sum64()
 }
