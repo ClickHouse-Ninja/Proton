@@ -12,15 +12,19 @@ func main() {
 	if err != nil {
 		log.Fatalf("NewClient() returned error: %v", err)
 	}
-
-	req := gopinba.Request{
-		Tags: map[string]string{
-			"A": "B",
-			"C": "D",
-		},
-	}
-
-	for i := 0; i < 50000000; i++ {
+	var (
+		os      = []string{"Windows", "Linux", "Mac OS"}
+		device  = []string{"Mobile", "Desktop", "TV"}
+		browser = []string{"Chrome", "FF"}
+	)
+	for i := 0; i < 1000; i++ {
+		req := gopinba.Request{
+			Tags: map[string]string{
+				"OS":      os[i%len(os)],
+				"Device":  device[i%len(device)],
+				"Browser": browser[i%len(browser)],
+			},
+		}
 		req.Hostname = "hostname"
 		req.ServerName = "servername"
 		req.ScriptName = "scriptname"

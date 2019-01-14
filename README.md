@@ -2,7 +2,7 @@
 
 # @todo
 - [ ] Grafana dashboards
-- [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md) [tags reports](examples/reports/tags.md)
+- [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md), [tags reports](examples/reports/tags.md)
 - [ ] [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start)
 
 # Installation
