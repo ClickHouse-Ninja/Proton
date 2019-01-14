@@ -6,32 +6,32 @@
 
 ```sql
 CREATE TABLE IF NOT EXISTS proton.platform_report (
-    Status                          Int16
-    , OS                            String
-    , Device                        String
-    , Browser                       String
-    , RequestCount                  UInt32
-    , RequestTimeTotal              Float32
-    , DocumentSizeTotal             UInt32
-    , MemoryPeakTotal               UInt32
-    , MemoryFootprintTotal          UInt32
-    , UtimeTotal                    Float32
-    , StimeTotal                    Float32
+    Status                     Int16
+    , OS                       String
+    , Device                   String
+    , Browser                  String
+    , RequestCount             UInt32
+    , RequestTimeTotal         Float32
+    , DocumentSizeTotal        UInt32
+    , MemoryPeakTotal          UInt32
+    , MemoryFootprintTotal     UInt32
+    , UtimeTotal               Float32
+    , StimeTotal               Float32
 
-    , RequestTimeMax                AggregateFunction(Max, Float32)
-    , DocumentSizeMax               AggregateFunction(Max, UInt32)
-    , MemoryPeakMax                 AggregateFunction(Max, UInt32)
-    , MemoryFootprintMax            AggregateFunction(Max, UInt32)
-    , UtimeTotalMax                 AggregateFunction(Max, Float32)
-    , StimeTotalMax                 AggregateFunction(Max, Float32)
+    , RequestTimeMax           AggregateFunction(Max, Float32)
+    , DocumentSizeMax          AggregateFunction(Max, UInt32)
+    , MemoryPeakMax            AggregateFunction(Max, UInt32)
+    , MemoryFootprintMax       AggregateFunction(Max, UInt32)
+    , UtimeMax                 AggregateFunction(Max, Float32)
+    , StimeMax                 AggregateFunction(Max, Float32)
 
-    , RequestTimeTotalQuantiles     AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
-    , DocumentSizeTotalQuantiles    AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
-    , MemoryPeakTotalQuantiles      AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
-    , MemoryFootprintTotalQuantiles AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
-    , UtimeTotalQuantiles           AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
-    , StimeTotalQuantiles           AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
-    , Timestamp                     DateTime
+    , RequestTimeQuantiles     AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
+    , DocumentSizeQuantiles    AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
+    , MemoryPeakQuantiles      AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
+    , MemoryFootprintQuantiles AggregateFunction(quantiles(0.9, 0.95, 0.99), UInt32)
+    , UtimeQuantiles           AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
+    , StimeQuantiles           AggregateFunction(quantiles(0.9, 0.95, 0.99), Float32)
+    , Timestamp                DateTime
 ) Engine SummingMergeTree
 PARTITION BY toYYYYMM(Timestamp)
 ORDER BY (
@@ -63,14 +63,14 @@ CREATE MATERIALIZED VIEW proton.v_by_platform TO proton.platform_report AS
         , arrayReduce('maxState', [DocumentSize])    AS DocumentSizeMax
         , arrayReduce('maxState', [MemoryPeak])      AS MemoryPeakMax
         , arrayReduce('maxState', [MemoryFootprint]) AS MemoryFootprintMax
-        , arrayReduce('maxState', [Utime])           AS UtimeTotalMax
-        , arrayReduce('maxState', [Stime])           AS StimeTotalMax
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [RequestTime])     AS RequestTimeTotalQuantiles
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [DocumentSize])    AS DocumentSizeTotalQuantiles
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [MemoryPeak])      AS MemoryPeakTotalQuantiles
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [MemoryFootprint]) AS MemoryFootprintTotalQuantiles
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [Utime])           AS UtimeTotalQuantiles
-        , arrayReduce('quantilesState(0.90,0.95,0.99)', [Stime])           AS StimeTotalQuantiles
+        , arrayReduce('maxState', [Utime])           AS UtimeMax
+        , arrayReduce('maxState', [Stime])           AS StimeMax
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [RequestTime])     AS RequestTimeQuantiles
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [DocumentSize])    AS DocumentSizeQuantiles
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [MemoryPeak])      AS MemoryPeakQuantiles
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [MemoryFootprint]) AS MemoryFootprintQuantiles
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [Utime])           AS UtimeQuantiles
+        , arrayReduce('quantilesState(0.90,0.95,0.99)', [Stime])           AS StimeQuantiles
         , toStartOfMinute(Timestamp) AS Timestamp
         /* ^^^ YOU CAN CHANGE IT.
          * Example:
@@ -89,7 +89,7 @@ SELECT
     , SUM(RequestCount)                    AS RequestCount
     , maxMerge(RequestTimeMax)             AS RequestTimeMax
     , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-    , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+    , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
     , SUM(UtimeTotal)           AS UtimeTotal
     , SUM(StimeTotal)           AS StimeTotal
     , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -105,7 +105,7 @@ SELECT
     , SUM(RequestCount)                    AS RequestCount
     , maxMerge(RequestTimeMax)             AS RequestTimeMax
     , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-    , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+    , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
     , SUM(UtimeTotal)           AS UtimeTotal
     , SUM(StimeTotal)           AS StimeTotal
     , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -122,7 +122,7 @@ SELECT
     , SUM(RequestCount)                    AS RequestCount
     , maxMerge(RequestTimeMax)             AS RequestTimeMax
     , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-    , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+    , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
     , SUM(UtimeTotal)           AS UtimeTotal
     , SUM(StimeTotal)           AS StimeTotal
     , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -139,7 +139,7 @@ SELECT
     , SUM(RequestCount)                    AS RequestCount
     , maxMerge(RequestTimeMax)             AS RequestTimeMax
     , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-    , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+    , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
     , SUM(UtimeTotal)           AS UtimeTotal
     , SUM(StimeTotal)           AS StimeTotal
     , SUM(DocumentSizeTotal)    AS TrafficTotal

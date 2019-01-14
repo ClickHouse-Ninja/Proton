@@ -6,9 +6,15 @@ import (
 	"log"
 
 	"github.com/ClickHouse-Ninja/Proton/src/server"
+
+	"net/http"
+	_ "net/http/pprof"
 )
 
-var options server.Options
+var (
+	options server.Options
+	pprof   string
+)
 
 var (
 	BuildDate            string
@@ -21,6 +27,7 @@ func init() {
 	flag.StringVar(&options.MetricsAddress, "metrics_addr", ":2112", "address on which to expose metrics")
 	flag.IntVar(&options.BacklogSize, "backlog", 100000, "backlog size")
 	flag.IntVar(&options.Concurrency, "concurrency", 2, "number of the background processes")
+	flag.StringVar(&pprof, "pprof", "", "pprof address. If set to start the pprof server")
 }
 
 func main() {
@@ -33,6 +40,11 @@ func main() {
 		flag.PrintDefaults()
 	}
 	flag.Parse()
+	if len(pprof) != 0 {
+		go func() {
+			log.Println(http.ListenAndServe(pprof, nil))
+		}()
+	}
 	if err := server.RunServer(options); err != nil {
 		log.Fatal(err)
 	}

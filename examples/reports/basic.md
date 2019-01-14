@@ -20,7 +20,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -50,7 +50,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -80,7 +80,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -112,7 +112,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -144,7 +144,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -176,7 +176,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
@@ -210,7 +210,7 @@ FROM (
         , SUM(RequestCount)                    AS RequestCount
         , maxMerge(RequestTimeMax)             AS RequestTimeMax
         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg
-        , quantilesMerge(0.9,0.95,0.99)(RequestTimeTotalQuantiles) AS RequestTimeQuantiles
+        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles
         , SUM(UtimeTotal)           AS UtimeTotal
         , SUM(StimeTotal)           AS StimeTotal
         , SUM(DocumentSizeTotal)    AS TrafficTotal
