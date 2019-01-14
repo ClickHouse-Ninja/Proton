@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS proton.base_report (
 PARTITION BY toYYYYMM(Timestamp)
 ORDER BY (
     Schema
+    , Timestamp
     , Status
     , HostnameID
     , ServerNameID
     , ScriptNameID
-    , Timestamp
 );
 
 CREATE MATERIALIZED VIEW proton.v_base_report TO proton.base_report AS
