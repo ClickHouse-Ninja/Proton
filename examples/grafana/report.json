@@ -1,805 +1,847 @@
 {
-    "__inputs": [
-      {
-        "name": "DS_CLICKHOUSE",
-        "label": "ClickHouse",
-        "description": "",
-        "type": "datasource",
-        "pluginId": "vertamedia-clickhouse-datasource",
-        "pluginName": "ClickHouse"
-      }
-    ],
-    "__requires": [
-      {
-        "type": "grafana",
-        "id": "grafana",
-        "name": "Grafana",
-        "version": "5.4.0"
-      },
-      {
-        "type": "panel",
-        "id": "graph",
-        "name": "Graph",
-        "version": "5.0.0"
-      },
-      {
-        "type": "panel",
-        "id": "table",
-        "name": "Table",
-        "version": "5.0.0"
-      },
-      {
-        "type": "datasource",
-        "id": "vertamedia-clickhouse-datasource",
-        "name": "ClickHouse",
-        "version": "1.8.0"
-      }
-    ],
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": "-- Grafana --",
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "type": "dashboard"
-        }
-      ]
+  "__inputs": [
+    {
+      "name": "DS_CLICKHOUSE",
+      "label": "ClickHouse",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "vertamedia-clickhouse-datasource",
+      "pluginName": "ClickHouse"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.4.0"
     },
-    "description": "",
-    "editable": true,
-    "gnetId": null,
-    "graphTooltip": 1,
-    "id": null,
-    "iteration": 1547477833555,
-    "links": [],
-    "panels": [
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "vertamedia-clickhouse-datasource",
+      "name": "ClickHouse",
+      "version": "1.8.0"
+    }
+  ],
+  "annotations": {
+    "list": [
       {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 0,
-          "y": 0
-        },
-        "id": 4,
-        "legend": {
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT\n    $timeSeries as t,\n    sum(RequestCount) / 60 AS RPS\nFROM $table\nWHERE $timeFilter\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
-            "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t,     sum(RequestCount) / 60 AS RPS FROM proton.base_report WHERE Timestamp >= toDateTime(1547467797)    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Requests per second",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 8,
-          "y": 0
-        },
-        "id": 2,
-        "legend": {
-          "avg": false,
-          "current": true,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT \n    t, \n    RequestTimeMax AS Max, \n    RequestTimeQuantiles[1] AS P90,\n    RequestTimeQuantiles[2] AS P95,\n    RequestTimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(RequestTimeMax) AS RequestTimeMax\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-            "rawQuery": "SELECT      t,      RequestTimeMax AS Max,      RequestTimeQuantiles[1] AS P90,     RequestTimeQuantiles[2] AS P95,     RequestTimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t         , maxMerge(RequestTimeMax) AS RequestTimeMax         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547467797)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Request Time",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "decimals": null,
-            "format": "ms",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 16,
-          "y": 0
-        },
-        "id": 7,
-        "legend": {
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT\n    $timeSeries as t,\n    Status,\n    sum(RequestCount) AS RequestPerMinute\nFROM $table\nWHERE $timeFilter AND Status > 400\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t, Status\nORDER BY t",
-            "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t,     Status,     sum(RequestCount) AS RequestPerMinute FROM proton.base_report WHERE Timestamp >= toDateTime(1547467797) AND Status > 400    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t, Status ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Requests per minute where status > 400",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 0,
-          "y": 8
-        },
-        "id": 5,
-        "legend": {
-          "avg": false,
-          "current": true,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT \n    t, \n    UtimeMax AS Max, \n    UtimeQuantiles[1] AS P90,\n    UtimeQuantiles[2] AS P95,\n    UtimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(UtimeMax) AS UtimeMax\n        , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-            "rawQuery": "SELECT      t,      UtimeMax AS Max,      UtimeQuantiles[1] AS P90,     UtimeQuantiles[2] AS P95,     UtimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t         , maxMerge(UtimeMax) AS UtimeMax         , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547467797)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "CPU",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "s",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 8,
-          "y": 8
-        },
-        "id": 6,
-        "legend": {
-          "avg": false,
-          "current": true,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT \n    t, \n    MemoryFootprintMax AS Max, \n    MemoryFootprintQuantiles[1] AS P90,\n    MemoryFootprintQuantiles[2] AS P95,\n    MemoryFootprintQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax\n        , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-            "rawQuery": "SELECT      t,      MemoryFootprintMax AS Max,      MemoryFootprintQuantiles[1] AS P90,     MemoryFootprintQuantiles[2] AS P95,     MemoryFootprintQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t         , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax         , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547467797)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Memory",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "${DS_CLICKHOUSE}",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 16,
-          "y": 8
-        },
-        "id": 8,
-        "legend": {
-          "avg": false,
-          "current": true,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "time_series",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT\n    $timeSeries as t,\n    SUM(DocumentSizeTotal) AS Traffic\nFROM $table\nWHERE\n    $timeFilter\n    AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END\n    AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END\n    AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
-            "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 15) * 15) * 1000 as t,     SUM(DocumentSizeTotal) AS Traffic FROM proton.base_report WHERE     Timestamp >= toDateTime(1547467797)     AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Traffic",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "Bps",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "columns": [],
-        "datasource": "${DS_CLICKHOUSE}",
-        "fontSize": "100%",
-        "gridPos": {
-          "h": 10,
-          "w": 24,
-          "x": 0,
-          "y": 16
-        },
-        "id": 10,
-        "links": [],
-        "pageSize": null,
-        "scroll": true,
-        "showHeader": true,
-        "sort": {
-          "col": 6,
-          "desc": true
-        },
-        "styles": [
-          {
-            "alias": "Time",
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "pattern": "Time",
-            "type": "date"
-          },
-          {
-            "alias": "",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "decimals": 2,
-            "pattern": "/.*/",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          }
-        ],
-        "targets": [
-          {
-            "database": "proton",
-            "dateLoading": false,
-            "dateTimeColDataType": "Timestamp",
-            "dateTimeType": "DATETIME",
-            "datetimeLoading": false,
-            "expr": "",
-            "format": "table",
-            "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-            "intervalFactor": 1,
-            "query": "SELECT\n    dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName\n    , RequestCount \n    , RequestTimeAvg\n    , RequestTimeMax\n    , RequestTimeQuantiles[1] AS RequestTime_90\n    , RequestTimeQuantiles[2] AS RequestTime_95\n    , RequestTimeQuantiles[3] AS RequestTime_99\n    , UtimeTotal\n    , StimeTotal\n    , formatReadableSize(TrafficTotal) AS TrafficTotal\n    , formatReadableSize(MemoryFootprintTotal) AS MemoryFootprintTotal\nFROM (\n    SELECT\n        ScriptNameID\n        , SUM(RequestCount)                    AS RequestCount\n        , maxMerge(RequestTimeMax)             AS RequestTimeMax\n        , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n        , SUM(UtimeTotal)           AS UtimeTotal\n        , SUM(StimeTotal)           AS StimeTotal\n        , SUM(DocumentSizeTotal)    AS TrafficTotal\n        , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal\n    FROM $table\n    WHERE $timeFilter\n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\n    GROUP BY ScriptNameID\n    ORDER BY RequestTimeQuantiles[3] DESC \n    LIMIT 10\n) ORDER BY RequestTime_99 DESC ",
-            "rawQuery": "SELECT     dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName     , RequestCount      , RequestTimeAvg     , RequestTimeMax     , RequestTimeQuantiles[1] AS RequestTime_90     , RequestTimeQuantiles[2] AS RequestTime_95     , RequestTimeQuantiles[3] AS RequestTime_99     , UtimeTotal     , StimeTotal     , formatReadableSize(TrafficTotal) AS TrafficTotal     , formatReadableSize(MemoryFootprintTotal) AS MemoryFootprintTotal FROM (     SELECT         ScriptNameID         , SUM(RequestCount)                    AS RequestCount         , maxMerge(RequestTimeMax)             AS RequestTimeMax         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles         , SUM(UtimeTotal)           AS UtimeTotal         , SUM(StimeTotal)           AS StimeTotal         , SUM(DocumentSizeTotal)    AS TrafficTotal         , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547467797)       AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END     GROUP BY ScriptNameID     ORDER BY RequestTimeQuantiles[3] DESC      LIMIT 10 ) ORDER BY RequestTime_99 DESC",
-            "refId": "A",
-            "round": "0s",
-            "table": "base_report",
-            "tableLoading": false
-          }
-        ],
-        "title": "TOP 10 slow scripts",
-        "transform": "table",
-        "type": "table"
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
       }
-    ],
-    "refresh": "10s",
-    "schemaVersion": 16,
-    "style": "dark",
-    "tags": [
-      "php",
-      "performance"
-    ],
-    "templating": {
-      "list": [
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": null,
+  "iteration": 1547495783549,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "legend": {
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
         {
-          "allValue": "'all'",
-          "current": {},
-          "datasource": "${DS_CLICKHOUSE}",
-          "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Schema' AND Value <> ''",
-          "hide": 0,
-          "includeAll": true,
-          "label": null,
-          "multi": false,
-          "name": "schema",
-          "options": [],
-          "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Schema' AND Value <> ''",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
-        },
-        {
-          "allValue": "'all'",
-          "current": {},
-          "datasource": "${DS_CLICKHOUSE}",
-          "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'ServerName'",
-          "hide": 0,
-          "includeAll": true,
-          "label": "server name",
-          "multi": false,
-          "name": "server_name",
-          "options": [],
-          "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'ServerName'",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
-        },
-        {
-          "allValue": "'all'",
-          "current": {},
-          "datasource": "${DS_CLICKHOUSE}",
-          "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Hostname'",
-          "hide": 0,
-          "includeAll": true,
-          "label": null,
-          "multi": false,
-          "name": "hostname",
-          "options": [],
-          "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Hostname'",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT\n    $timeSeries as t,\n    sum(RequestCount) / 60 AS RPS\nFROM $table\nWHERE $timeFilter\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     sum(RequestCount) / 60 AS RPS FROM proton.base_report WHERE Timestamp >= toDateTime(1547485591)    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
         }
-      ]
-    },
-    "time": {
-      "from": "now-3h",
-      "to": "now"
-    },
-    "timepicker": {
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
       ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Requests per second",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
-    "timezone": "",
-    "title": "Basic reports",
-    "uid": "4hcaISQiz",
-    "version": 56
-  }
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT \n    t, \n    RequestTimeMax AS Max, \n    RequestTimeQuantiles[1] AS P90,\n    RequestTimeQuantiles[2] AS P95,\n    RequestTimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(RequestTimeMax) AS RequestTimeMax\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
+          "rawQuery": "SELECT      t,      RequestTimeMax AS Max,      RequestTimeQuantiles[1] AS P90,     RequestTimeQuantiles[2] AS P95,     RequestTimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(RequestTimeMax) AS RequestTimeMax         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Request Time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 7,
+      "legend": {
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT\n    $timeSeries as t,\n    Status,\n    sum(RequestCount) AS RequestPerMinute\nFROM $table\nWHERE $timeFilter AND Status > 400\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t, Status\nORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     Status,     sum(RequestCount) AS RequestPerMinute FROM proton.base_report WHERE Timestamp >= toDateTime(1547485591) AND Status > 400    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t, Status ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Requests per minute where status > 400",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "id": 5,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT \n    t, \n    UtimeMax AS Max, \n    UtimeQuantiles[1] AS P90,\n    UtimeQuantiles[2] AS P95,\n    UtimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(UtimeMax) AS UtimeMax\n        , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
+          "rawQuery": "SELECT      t,      UtimeMax AS Max,      UtimeQuantiles[1] AS P90,     UtimeQuantiles[2] AS P95,     UtimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(UtimeMax) AS UtimeMax         , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 8
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT \n    t, \n    MemoryFootprintMax AS Max, \n    MemoryFootprintQuantiles[1] AS P90,\n    MemoryFootprintQuantiles[2] AS P95,\n    MemoryFootprintQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax\n        , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
+          "rawQuery": "SELECT      t,      MemoryFootprintMax AS Max,      MemoryFootprintQuantiles[1] AS P90,     MemoryFootprintQuantiles[2] AS P95,     MemoryFootprintQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax         , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Memory",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 8
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT\n    $timeSeries as t,\n    SUM(DocumentSizeTotal)/60 AS Traffic\nFROM $table\nWHERE\n    $timeFilter\n    AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END\n    AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END\n    AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     SUM(DocumentSizeTotal)/60 AS Traffic FROM proton.base_report WHERE     Timestamp >= toDateTime(1547485591)     AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Traffic",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "Bps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "columns": [],
+      "datasource": "${DS_CLICKHOUSE}",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 10,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 6,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "StimeTotal",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "UtimeTotal",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "RequestTime(.*?)",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "database": "proton",
+          "dateLoading": false,
+          "dateTimeColDataType": "Timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "expr": "",
+          "format": "table",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "intervalFactor": 1,
+          "query": "SELECT\n    dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName\n    , RequestCount \n    , RequestTimeAvg\n    , RequestTimeMax\n    , RequestTimeQuantiles[1] AS RequestTime_90\n    , RequestTimeQuantiles[2] AS RequestTime_95\n    , RequestTimeQuantiles[3] AS RequestTime_99\n    , UtimeTotal\n    , StimeTotal\n    , formatReadableSize(TrafficTotal) AS TrafficTotal\n    , formatReadableSize(MemoryFootprintTotal) AS MemoryTotal\nFROM (\n    SELECT\n        ScriptNameID\n        , SUM(RequestCount)                    AS RequestCount\n        , maxMerge(RequestTimeMax)             AS RequestTimeMax\n        , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n        , SUM(UtimeTotal)           AS UtimeTotal\n        , SUM(StimeTotal)           AS StimeTotal\n        , SUM(DocumentSizeTotal)    AS TrafficTotal\n        , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal\n    FROM $table\n    WHERE $timeFilter\n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\n    GROUP BY ScriptNameID\n    ORDER BY RequestTimeQuantiles[3] DESC \n    LIMIT 10\n) ORDER BY RequestTime_99 DESC ",
+          "rawQuery": "SELECT     dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName     , RequestCount      , RequestTimeAvg     , RequestTimeMax     , RequestTimeQuantiles[1] AS RequestTime_90     , RequestTimeQuantiles[2] AS RequestTime_95     , RequestTimeQuantiles[3] AS RequestTime_99     , UtimeTotal     , StimeTotal     , formatReadableSize(TrafficTotal) AS TrafficTotal     , formatReadableSize(MemoryFootprintTotal) AS MemoryTotal FROM (     SELECT         ScriptNameID         , SUM(RequestCount)                    AS RequestCount         , maxMerge(RequestTimeMax)             AS RequestTimeMax         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles         , SUM(UtimeTotal)           AS UtimeTotal         , SUM(StimeTotal)           AS StimeTotal         , SUM(DocumentSizeTotal)    AS TrafficTotal         , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)       AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END     GROUP BY ScriptNameID     ORDER BY RequestTimeQuantiles[3] DESC      LIMIT 10 ) ORDER BY RequestTime_99 DESC",
+          "refId": "A",
+          "round": "0s",
+          "table": "base_report",
+          "tableLoading": false
+        }
+      ],
+      "title": "TOP 10 slow scripts",
+      "transform": "table",
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "php",
+    "performance"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": "'all'",
+        "current": {},
+        "datasource": "${DS_CLICKHOUSE}",
+        "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Schema' AND Value <> ''",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "schema",
+        "options": [],
+        "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Schema' AND Value <> ''",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "'all'",
+        "current": {},
+        "datasource": "${DS_CLICKHOUSE}",
+        "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'ServerName'",
+        "hide": 0,
+        "includeAll": true,
+        "label": "server name",
+        "multi": false,
+        "name": "server_name",
+        "options": [],
+        "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'ServerName'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "'all'",
+        "current": {},
+        "datasource": "${DS_CLICKHOUSE}",
+        "definition": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Hostname'",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "hostname",
+        "options": [],
+        "query": "SELECT DISTINCT Value FROM proton.dictionary WHERE Column = 'Hostname'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Basic reports",
+  "uid": "4hcaISQiz",
+  "version": 65
+}
