@@ -13,7 +13,7 @@ func (server *server) background() {
 	loop:
 		for block.Reserve(); ; {
 			select {
-			case request := <-server.backlog:
+			case request := <-server.reqBacklog:
 				block.NumRows++
 				block.WriteString(0, request.Hostname())
 				block.WriteString(1, request.Schema())
@@ -39,7 +39,7 @@ func (server *server) background() {
 				block.WriteArray(17, clickhouse.Array(request.TimerRuUtime))
 				// block.WriteArray(18, clickhouse.Array(Array(T))  TagsName @todo add support of Array(Array(T)) to the driver
 				// block.WriteArray(19, clickhouse.Array(Array(T))) TagsValue
-				block.WriteDateTime(18, request.timestamp)
+				block.WriteUInt32(18, request.timestamp)
 			case <-tick:
 				break loop
 			}

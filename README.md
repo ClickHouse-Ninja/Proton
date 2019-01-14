@@ -2,12 +2,12 @@
 
 # @todo
 - [ ] Grafana dashboards
-- [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md)
+- [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md) [tags reports](examples/reports/tags.md)
 - [ ] [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start)
 
 # Installation
 
-### Install the ClickHouse server
+### Install ClickHouse server
 
 ```sh
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4    # optional
@@ -31,6 +31,39 @@ and then create the base report table and materialize view
 
 ```sh
 clickhouse-client -n < schema/reports/base.sql
+```
+
+### Add Proton dictionary to ClickHouse server
+
+Example:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionaries>
+    <dictionary>
+      <name>Proton</name>
+        <source>
+            <clickhouse>
+                <host>127.0.0.1</host>
+                <port>9000</port>
+                <user>default</user>
+                <password></password>
+                <db>proton</db>
+                <table>dictionary</table>
+            </clickhouse>
+        </source>
+      <lifetime>600</lifetime>
+      <layout><hashed /></layout>
+      <structure>
+         <id><name>ID</name></id>
+         <attribute>
+               <name>Value</name>
+                <type>String</type>
+                <null_value></null_value>
+         </attribute>
+      </structure>
+   </dictionary>
+</dictionaries>
 ```
 
 # Usage:

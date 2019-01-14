@@ -30,7 +30,6 @@ FROM (
 );
 ```
 
-
 ## By server name
 ```sql
 SELECT
@@ -61,7 +60,6 @@ FROM (
 );
 ```
 
-
 ## By hostname
 ```sql
 SELECT
@@ -91,7 +89,6 @@ FROM (
     GROUP BY HostnameID
 );
 ```
-
 
 ## By server and script
 ```sql
@@ -125,7 +122,6 @@ FROM (
 );
 ```
 
-
 ## By hostname and script
 ```sql
 SELECT
@@ -158,7 +154,6 @@ FROM (
 );
 ```
 
-
 ## By hostname and server
 ```sql
 SELECT
@@ -190,7 +185,6 @@ FROM (
     GROUP BY HostnameID, ServerNameID
 );
 ```
-
 
 ## By hostname, server and script
 ```sql

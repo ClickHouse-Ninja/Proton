@@ -1,6 +1,7 @@
 package server
 
 import (
+	"database/sql"
 	"log"
 	"math"
 	"net"
@@ -11,7 +12,6 @@ import (
 
 	"github.com/ClickHouse-Ninja/Proton/proto/pinba"
 	"github.com/kshvakov/clickhouse"
-	"github.com/kshvakov/clickhouse/lib/cityhash102"
 	"github.com/kshvakov/clickhouse/lib/data"
 )
 
@@ -23,17 +23,22 @@ func RunServer(options Options) error {
 	log.Printf("Proton server listen UDP [%s], Prometheus exporter [%s] concurrency: %d", options.Address, options.MetricsAddress, options.Concurrency)
 	server := server{
 		dsn:         options.DSN,
-		backlog:     make(chan requestContainer, options.BacklogSize),
+		reqBacklog:  make(chan request, options.BacklogSize),
 		dictBacklog: make(chan dict, 1000),
 		connections: make(chan clickhouse.Clickhouse, options.Concurrency),
 	}
+	if server.sqlConnection, err = sql.Open("clickhouse", options.DSN); err != nil {
+		return err
+	}
+	server.sqlConnection.SetMaxOpenConns(2)
+	server.sqlConnection.SetConnMaxLifetime(time.Hour)
 	if server.block, err = server.prepareBlock(insertIntoRequestsSQL); err != nil {
 		return err
 	}
 	if server.dictBlock, err = server.prepareBlock(insertIntoDictionarySQL); err != nil {
 		return err
 	}
-	opsConcurrency.Set(float64(options.Concurrency))
+	cntConcurrency.Set(float64(options.Concurrency))
 	go server.metrics(options.MetricsAddress)
 	go server.backgroundDictionary()
 	for i := 0; i < options.Concurrency; i++ {
@@ -49,12 +54,13 @@ func RunServer(options Options) error {
 }
 
 type server struct {
-	dsn         string
-	block       *data.Block
-	dictBlock   *data.Block
-	backlog     chan requestContainer
-	dictBacklog chan dict
-	connections chan clickhouse.Clickhouse
+	dsn           string
+	block         *data.Block
+	dictBlock     *data.Block
+	reqBacklog    chan request
+	dictBacklog   chan dict
+	connections   chan clickhouse.Clickhouse
+	sqlConnection *sql.DB
 }
 
 func (server *server) prepareBlock(sql string) (block *data.Block, _ error) {
@@ -118,24 +124,28 @@ func (server *server) listen(conn net.PacketConn) {
 		dictID = make(map[uint64]struct{}, 1000)
 	)
 	for {
-		var request pinba.Request
+		var req pinba.Request
 		if ln, _, err := conn.ReadFrom(buffer[:]); err == nil {
-			if err := request.Unmarshal(buffer[:ln]); err == nil {
-				container := requestContainer{
-					Request:   request,
-					timestamp: time.Now(),
+			if err := req.Unmarshal(buffer[:ln]); err == nil {
+				container := request{
+					Request:   req,
+					timestamp: now(),
 				}
 				select {
-				case server.backlog <- container:
+				case server.reqBacklog <- container:
 				default:
 					log.Println("backlog is full")
 				}
-				for _, tuple := range [][]string{
+				dictionary := [][]string{
 					{"Schema", container.Schema()},
 					{"Hostname", container.Hostname()},
 					{"ServerName", container.ServerName()},
 					{"ScriptName", container.ScriptName()},
-				} {
+				}
+				for _, value := range container.Dictionary {
+					dictionary = append(dictionary, []string{"Dictionary", value})
+				}
+				for _, tuple := range dictionary {
 					id := cityHash64(tuple[1])
 					if _, exists := dictID[id]; !exists {
 						dictID[id] = struct{}{}
@@ -152,10 +162,4 @@ func (server *server) listen(conn net.PacketConn) {
 			}
 		}
 	}
-}
-
-func cityHash64(str string) uint64 {
-	cityhash := cityhash102.New64()
-	cityhash.Write([]byte(str))
-	return cityhash.Sum64()
 }
