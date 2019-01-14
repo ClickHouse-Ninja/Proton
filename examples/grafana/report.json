@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1547495783549,
+  "iteration": 1547495783580,
   "links": [],
   "panels": [
     {
@@ -103,7 +103,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT\n    $timeSeries as t,\n    sum(RequestCount) / 60 AS RPS\nFROM $table\nWHERE $timeFilter\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
-          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     sum(RequestCount) / 60 AS RPS FROM proton.base_report WHERE Timestamp >= toDateTime(1547485591)    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     sum(RequestCount) / 60 AS RPS FROM proton.base_report WHERE Timestamp >= toDateTime(1547486928)    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -198,7 +198,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT \n    t, \n    RequestTimeMax AS Max, \n    RequestTimeQuantiles[1] AS P90,\n    RequestTimeQuantiles[2] AS P95,\n    RequestTimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(RequestTimeMax) AS RequestTimeMax\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-          "rawQuery": "SELECT      t,      RequestTimeMax AS Max,      RequestTimeQuantiles[1] AS P90,     RequestTimeQuantiles[2] AS P95,     RequestTimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(RequestTimeMax) AS RequestTimeMax         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "rawQuery": "SELECT      t,      RequestTimeMax AS Max,      RequestTimeQuantiles[1] AS P90,     RequestTimeQuantiles[2] AS P95,     RequestTimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(RequestTimeMax) AS RequestTimeMax         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547486928)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -294,7 +294,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT\n    $timeSeries as t,\n    Status,\n    sum(RequestCount) AS RequestPerMinute\nFROM $table\nWHERE $timeFilter AND Status > 400\n   AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t, Status\nORDER BY t",
-          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     Status,     sum(RequestCount) AS RequestPerMinute FROM proton.base_report WHERE Timestamp >= toDateTime(1547485591) AND Status > 400    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t, Status ORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     Status,     sum(RequestCount) AS RequestPerMinute FROM proton.base_report WHERE Timestamp >= toDateTime(1547486928) AND Status > 400    AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t, Status ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -389,7 +389,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT \n    t, \n    UtimeMax AS Max, \n    UtimeQuantiles[1] AS P90,\n    UtimeQuantiles[2] AS P95,\n    UtimeQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(UtimeMax) AS UtimeMax\n        , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-          "rawQuery": "SELECT      t,      UtimeMax AS Max,      UtimeQuantiles[1] AS P90,     UtimeQuantiles[2] AS P95,     UtimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(UtimeMax) AS UtimeMax         , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "rawQuery": "SELECT      t,      UtimeMax AS Max,      UtimeQuantiles[1] AS P90,     UtimeQuantiles[2] AS P95,     UtimeQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(UtimeMax) AS UtimeMax         , quantilesMerge(0.9,0.95,0.99)(UtimeQuantiles) AS UtimeQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547486928)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -484,7 +484,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT \n    t, \n    MemoryFootprintMax AS Max, \n    MemoryFootprintQuantiles[1] AS P90,\n    MemoryFootprintQuantiles[2] AS P95,\n    MemoryFootprintQuantiles[3] AS P99\nFROM (\n    SELECT\n        $timeSeries as t\n        , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax\n        , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles\n    FROM $table\n    WHERE $timeFilter \n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END \n    GROUP BY t\n    ORDER BY t\n) ORDER BY t",
-          "rawQuery": "SELECT      t,      MemoryFootprintMax AS Max,      MemoryFootprintQuantiles[1] AS P90,     MemoryFootprintQuantiles[2] AS P95,     MemoryFootprintQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax         , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
+          "rawQuery": "SELECT      t,      MemoryFootprintMax AS Max,      MemoryFootprintQuantiles[1] AS P90,     MemoryFootprintQuantiles[2] AS P95,     MemoryFootprintQuantiles[3] AS P99 FROM (     SELECT         (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t         , maxMerge(MemoryFootprintMax) AS MemoryFootprintMax         , quantilesMerge(0.9,0.95,0.99)(MemoryFootprintQuantiles) AS MemoryFootprintQuantiles     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547486928)        AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END      GROUP BY t     ORDER BY t ) ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -579,7 +579,7 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
           "query": "SELECT\n    $timeSeries as t,\n    SUM(DocumentSizeTotal)/60 AS Traffic\nFROM $table\nWHERE\n    $timeFilter\n    AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END\n    AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END\n    AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\nGROUP BY t\nORDER BY t",
-          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     SUM(DocumentSizeTotal)/60 AS Traffic FROM proton.base_report WHERE     Timestamp >= toDateTime(1547485591)     AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
+          "rawQuery": "SELECT     (intDiv(toUInt32(Timestamp), 20) * 20) * 1000 as t,     SUM(DocumentSizeTotal)/60 AS Traffic FROM proton.base_report WHERE     Timestamp >= toDateTime(1547486928)     AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END     AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END GROUP BY t ORDER BY t",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -658,7 +658,7 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "StimeTotal",
+          "pattern": "Stime",
           "thresholds": [],
           "type": "number",
           "unit": "s"
@@ -674,7 +674,7 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "UtimeTotal",
+          "pattern": "Utime",
           "thresholds": [],
           "type": "number",
           "unit": "s"
@@ -703,6 +703,38 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Traffic",
+          "thresholds": [],
+          "type": "number",
+          "unit": "Bps"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Memory",
+          "thresholds": [],
+          "type": "number",
+          "unit": "decbytes"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
           "decimals": 2,
           "pattern": "/.*/",
           "thresholds": [],
@@ -721,8 +753,8 @@
           "format": "table",
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "intervalFactor": 1,
-          "query": "SELECT\n    dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName\n    , RequestCount \n    , RequestTimeAvg\n    , RequestTimeMax\n    , RequestTimeQuantiles[1] AS RequestTime_90\n    , RequestTimeQuantiles[2] AS RequestTime_95\n    , RequestTimeQuantiles[3] AS RequestTime_99\n    , UtimeTotal\n    , StimeTotal\n    , formatReadableSize(TrafficTotal) AS TrafficTotal\n    , formatReadableSize(MemoryFootprintTotal) AS MemoryTotal\nFROM (\n    SELECT\n        ScriptNameID\n        , SUM(RequestCount)                    AS RequestCount\n        , maxMerge(RequestTimeMax)             AS RequestTimeMax\n        , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n        , SUM(UtimeTotal)           AS UtimeTotal\n        , SUM(StimeTotal)           AS StimeTotal\n        , SUM(DocumentSizeTotal)    AS TrafficTotal\n        , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal\n    FROM $table\n    WHERE $timeFilter\n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\n    GROUP BY ScriptNameID\n    ORDER BY RequestTimeQuantiles[3] DESC \n    LIMIT 10\n) ORDER BY RequestTime_99 DESC ",
-          "rawQuery": "SELECT     dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName     , RequestCount      , RequestTimeAvg     , RequestTimeMax     , RequestTimeQuantiles[1] AS RequestTime_90     , RequestTimeQuantiles[2] AS RequestTime_95     , RequestTimeQuantiles[3] AS RequestTime_99     , UtimeTotal     , StimeTotal     , formatReadableSize(TrafficTotal) AS TrafficTotal     , formatReadableSize(MemoryFootprintTotal) AS MemoryTotal FROM (     SELECT         ScriptNameID         , SUM(RequestCount)                    AS RequestCount         , maxMerge(RequestTimeMax)             AS RequestTimeMax         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles         , SUM(UtimeTotal)           AS UtimeTotal         , SUM(StimeTotal)           AS StimeTotal         , SUM(DocumentSizeTotal)    AS TrafficTotal         , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547485591)       AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END     GROUP BY ScriptNameID     ORDER BY RequestTimeQuantiles[3] DESC      LIMIT 10 ) ORDER BY RequestTime_99 DESC",
+          "query": "WITH ($to - $from) AS Seconds \nSELECT \n    dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName\n    , RequestCount / Seconds AS RPS\n    , RequestTimeAvg\n    , RequestTimeMax\n    , RequestTimeQuantiles[1] AS RequestTime_90\n    , RequestTimeQuantiles[2] AS RequestTime_95\n    , RequestTimeQuantiles[3] AS RequestTime_99\n    , UtimeTotal / RequestCount AS Utime\n    , StimeTotal / RequestCount AS Stime\n    , TrafficTotal / Seconds AS Traffic\n    , MemoryFootprintTotal / RequestCount AS Memory\nFROM (\n    SELECT\n        ScriptNameID\n        , SUM(RequestCount)                    AS RequestCount\n        , maxMerge(RequestTimeMax)             AS RequestTimeMax\n        , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg\n        , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles\n        , SUM(UtimeTotal)           AS UtimeTotal\n        , SUM(StimeTotal)           AS StimeTotal\n        , SUM(DocumentSizeTotal)    AS TrafficTotal\n        , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal\n    FROM $table\n    WHERE $timeFilter\n      AND CASE WHEN $schema <> 'all' THEN Schema = $schema ELSE 1 END \n      AND CASE WHEN $hostname <> 'all' THEN HostnameID = cityHash64($hostname) ELSE 1 END \n      AND CASE WHEN $server_name <> 'all' THEN ServerNameID = cityHash64($server_name) ELSE 1 END\n    GROUP BY ScriptNameID\n    ORDER BY RequestTimeQuantiles[3] DESC \n    LIMIT 10\n) ORDER BY RequestTime_99 DESC ",
+          "rawQuery": "WITH (1547497780 - 1547486978) AS Seconds  SELECT      dictGetString('Proton', 'Value', ScriptNameID) AS ScriptName     , RequestCount / Seconds AS RPS     , RequestTimeAvg     , RequestTimeMax     , RequestTimeQuantiles[1] AS RequestTime_90     , RequestTimeQuantiles[2] AS RequestTime_95     , RequestTimeQuantiles[3] AS RequestTime_99     , UtimeTotal / RequestCount AS Utime     , StimeTotal / RequestCount AS Stime     , TrafficTotal / Seconds AS Traffic     , MemoryFootprintTotal / RequestCount AS Memory FROM (     SELECT         ScriptNameID         , SUM(RequestCount)                    AS RequestCount         , maxMerge(RequestTimeMax)             AS RequestTimeMax         , SUM(RequestTimeTotal) / RequestCount AS RequestTimeAvg         , quantilesMerge(0.9,0.95,0.99)(RequestTimeQuantiles) AS RequestTimeQuantiles         , SUM(UtimeTotal)           AS UtimeTotal         , SUM(StimeTotal)           AS StimeTotal         , SUM(DocumentSizeTotal)    AS TrafficTotal         , SUM(MemoryFootprintTotal) AS MemoryFootprintTotal     FROM proton.base_report     WHERE Timestamp >= toDateTime(1547486978)       AND CASE WHEN 'all' <> 'all' THEN Schema = 'all' ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN HostnameID = cityHash64('all') ELSE 1 END        AND CASE WHEN 'all' <> 'all' THEN ServerNameID = cityHash64('all') ELSE 1 END     GROUP BY ScriptNameID     ORDER BY RequestTimeQuantiles[3] DESC      LIMIT 10 ) ORDER BY RequestTime_99 DESC",
           "refId": "A",
           "round": "0s",
           "table": "base_report",
@@ -843,5 +875,5 @@
   "timezone": "",
   "title": "Basic reports",
   "uid": "4hcaISQiz",
-  "version": 65
+  "version": 71
 }
