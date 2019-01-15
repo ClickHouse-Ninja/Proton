@@ -85,3 +85,5 @@ USAGE:
   -metrics_addr string
         Address on which to expose metrics (default ":2112")
 ```
+
+![Grafana basic reports](/assets/grafana-basic-reports.png)
