@@ -1,0 +1,181 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "0rido7hYHQtfq3UJzVT5LClLAWc=",
+			"path": "github.com/beorn7/perks/quantile",
+			"revision": "3a771d992973f24aa725d07868b467d1ddfceafb",
+			"revisionTime": "2018-03-21T16:47:47Z"
+		},
+		{
+			"checksumSHA1": "rasgUuf7DVFShc3hKeh9wjWBWO0=",
+			"path": "github.com/gogo/protobuf/gogoproto",
+			"revision": "8e4a75f11384d0fb2188d872d456407e41f33fc0",
+			"revisionTime": "2018-12-31T10:04:52Z"
+		},
+		{
+			"checksumSHA1": "jyCYGbN0KvpV6PasLXLOmNsaA3s=",
+			"path": "github.com/gogo/protobuf/proto",
+			"revision": "8e4a75f11384d0fb2188d872d456407e41f33fc0",
+			"revisionTime": "2018-12-31T10:04:52Z"
+		},
+		{
+			"checksumSHA1": "uA3fNRcrMhh6Y8ugPuoyEK72nvk=",
+			"path": "github.com/gogo/protobuf/protoc-gen-gogo/descriptor",
+			"revision": "8e4a75f11384d0fb2188d872d456407e41f33fc0",
+			"revisionTime": "2018-12-31T10:04:52Z"
+		},
+		{
+			"checksumSHA1": "Y2MOwzNZfl4NRNDbLCZa6sgx7O0=",
+			"path": "github.com/golang/protobuf/proto",
+			"revision": "1d3f30b51784bec5aad268e59fd3c2fc1c2fe73f",
+			"revisionTime": "2018-11-28T19:23:52Z"
+		},
+		{
+			"checksumSHA1": "Gvxld1l2OJFWlV9AgSquo/etNEI=",
+			"path": "github.com/kshvakov/clickhouse",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "f9vKXNe4BAsTz8Vh1mLRJ++T68Q=",
+			"path": "github.com/kshvakov/clickhouse/lib/binary",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "IEFIMD9e65ASRnnI4pAvmu4s3f8=",
+			"path": "github.com/kshvakov/clickhouse/lib/cityhash102",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "YUCgnI/jedEl60M5Qaz98s/vd5s=",
+			"path": "github.com/kshvakov/clickhouse/lib/column",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "WjwyvWY3LarX+P2XCnl++Yrp2rA=",
+			"path": "github.com/kshvakov/clickhouse/lib/data",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "KU4wHwqDVamUoKaZbrAtrzcKx40=",
+			"path": "github.com/kshvakov/clickhouse/lib/leakypool",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "5jrXVi2ZcS+qO/zsR4/69UrTyx8=",
+			"path": "github.com/kshvakov/clickhouse/lib/lz4",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "ufET0wbq25geHjZiCY3tu4FlLeU=",
+			"path": "github.com/kshvakov/clickhouse/lib/protocol",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "jHl2hR+E4mVq4ovEEVKdgqi9iwk=",
+			"path": "github.com/kshvakov/clickhouse/lib/types",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "pfzF4zamkyVBOqjDbNA84M1crts=",
+			"path": "github.com/kshvakov/clickhouse/lib/writebuffer",
+			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
+			"revisionTime": "2018-12-08T12:50:10Z"
+		},
+		{
+			"checksumSHA1": "bKMZjd2wPw13VwoE7mBeSv5djFA=",
+			"path": "github.com/matttproud/golang_protobuf_extensions/pbutil",
+			"revision": "c12348ce28de40eed0136aa2b644d0ee0650e56c",
+			"revisionTime": "2016-04-24T11:30:07Z"
+		},
+		{
+			"checksumSHA1": "otmDX20sTPnGC8Ro16pJjIlfLuo=",
+			"path": "github.com/mkevac/gopinba",
+			"revision": "471ad6b3e951c42c916496febc1ecbeaa11f9146",
+			"revisionTime": "2017-12-06T10:47:54Z"
+		},
+		{
+			"checksumSHA1": "VgPgLx94CpvZCuLJKTuZn1juAZk=",
+			"path": "github.com/mkevac/gopinba/Pinba",
+			"revision": "471ad6b3e951c42c916496febc1ecbeaa11f9146",
+			"revisionTime": "2017-12-06T10:47:54Z"
+		},
+		{
+			"checksumSHA1": "5IUpj+w/TVy3rj8oL3lFS0p7TEc=",
+			"path": "github.com/prometheus/client_golang/prometheus",
+			"revision": "bcbbc08eb2ddff3af83bbf11e7ec13b4fd730b6e",
+			"revisionTime": "2018-07-13T20:10:52Z"
+		},
+		{
+			"checksumSHA1": "BFMAsj5z3cYaNKx9fwHrazQRFvI=",
+			"path": "github.com/prometheus/client_golang/prometheus/promauto",
+			"revision": "bcbbc08eb2ddff3af83bbf11e7ec13b4fd730b6e",
+			"revisionTime": "2018-07-13T20:10:52Z"
+		},
+		{
+			"checksumSHA1": "d5BiEvD8MrgpWQ6PQJUvawJsMak=",
+			"path": "github.com/prometheus/client_golang/prometheus/promhttp",
+			"revision": "bcbbc08eb2ddff3af83bbf11e7ec13b4fd730b6e",
+			"revisionTime": "2018-07-13T20:10:52Z"
+		},
+		{
+			"checksumSHA1": "V8xkqgmP66sq2ZW4QO5wi9a4oZE=",
+			"path": "github.com/prometheus/client_model/go",
+			"revision": "5c3871d89910bfb32f5fcab2aa4b9ec68e65a99f",
+			"revisionTime": "2018-07-12T10:51:10Z"
+		},
+		{
+			"checksumSHA1": "vPdC/DzEm7YbzRir2wwnpLPfay8=",
+			"path": "github.com/prometheus/common/expfmt",
+			"revision": "7600349dcfe1abd18d72d3a1770870d9800a7801",
+			"revisionTime": "2018-05-18T15:47:59Z"
+		},
+		{
+			"checksumSHA1": "GWlM3d2vPYyNATtTFgftS10/A9w=",
+			"path": "github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg",
+			"revision": "7600349dcfe1abd18d72d3a1770870d9800a7801",
+			"revisionTime": "2018-05-18T15:47:59Z"
+		},
+		{
+			"checksumSHA1": "EXTRY7DL9gFW8c341Dk6LDXCBn8=",
+			"path": "github.com/prometheus/common/model",
+			"revision": "7600349dcfe1abd18d72d3a1770870d9800a7801",
+			"revisionTime": "2018-05-18T15:47:59Z"
+		},
+		{
+			"checksumSHA1": "jo/zxF+Pfj5yZjReTKGOACq9IBs=",
+			"path": "github.com/prometheus/procfs",
+			"revision": "05ee40e3a273f7245e8777337fc7b46e533a9a92",
+			"revisionTime": "2018-07-25T12:39:19Z"
+		},
+		{
+			"checksumSHA1": "lv9rIcjbVEGo8AT1UCUZXhXrfQc=",
+			"path": "github.com/prometheus/procfs/internal/util",
+			"revision": "05ee40e3a273f7245e8777337fc7b46e533a9a92",
+			"revisionTime": "2018-07-25T12:39:19Z"
+		},
+		{
+			"checksumSHA1": "HSP5hVT0CNMRa8+Xtz4z2Ic5U0E=",
+			"path": "github.com/prometheus/procfs/nfs",
+			"revision": "05ee40e3a273f7245e8777337fc7b46e533a9a92",
+			"revisionTime": "2018-07-25T12:39:19Z"
+		},
+		{
+			"checksumSHA1": "yItvTQLUVqm/ArLEbvEhqG0T5a0=",
+			"path": "github.com/prometheus/procfs/xfs",
+			"revision": "05ee40e3a273f7245e8777337fc7b46e533a9a92",
+			"revisionTime": "2018-07-25T12:39:19Z"
+		}
+	],
+	"rootPath": "github.com/ClickHouse-Ninja/Proton"
+}
