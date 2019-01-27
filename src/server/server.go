@@ -137,10 +137,10 @@ func (server *server) listen(conn net.PacketConn) {
 					log.Println("backlog is full")
 				}
 				dictionary := [][]string{
-					{"Schema", container.Schema()},
-					{"Hostname", container.Hostname()},
-					{"ServerName", container.ServerName()},
-					{"ScriptName", container.ScriptName()},
+					{"Schema", container.GetSchema()},
+					{"Hostname", container.GetHostname()},
+					{"ServerName", container.GetServerName()},
+					{"ScriptName", container.GetScriptName()},
 				}
 				for _, value := range container.Dictionary {
 					dictionary = append(dictionary, []string{"Dictionary", value})

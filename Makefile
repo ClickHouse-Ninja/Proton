@@ -8,9 +8,9 @@ proto:
 
 build:
 	@[ -d .build ] || mkdir -p .build
-	CGO_ENABLED=0 go build ${LDFLAGS} -o .build/proton cmd/proton/main.go
-	@file  .build/proton
-	@du -h .build/proton
+	CGO_ENABLED=0 go build ${LDFLAGS} -o .build/proton-server cmd/proton-server/main.go
+	@file  .build/proton-server
+	@du -h .build/proton-server
 
 deb: build
 	@nfpm pkg --target .build/proton-server.deb

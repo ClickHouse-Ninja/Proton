@@ -63,11 +63,11 @@ CREATE MATERIALIZED VIEW proton.v_base_report TO proton.base_report AS
         , arrayReduce('quantilesState(0.90,0.95,0.99)', [MemoryFootprint]) AS MemoryFootprintQuantiles
         , arrayReduce('quantilesState(0.90,0.95,0.99)', [Utime])           AS UtimeQuantiles
         , arrayReduce('quantilesState(0.90,0.95,0.99)', [Stime])           AS StimeQuantiles
-        , toDateTime(intDiv(toUInt32(Timestamp), 15) * 15) AS Timestamp
+        , toDateTime(intDiv(toUInt32(Timestamp), 5) * 5) AS Timestamp
         /* ^^^ YOU CAN CHANGE IT.
          * Example:
-         *   toStartOfMinute(Timestamp)                     - round up to 1 minute
-         *   toStartOfFiveMinute(Timestamp)                 - round up to 5 minutes
-         *   toDateTime(intDiv(toUInt32(Timestamp), 5) * 5) - round up to 5 seconds
+         *   toStartOfMinute(Timestamp)                       - round up to 1 minute
+         *   toStartOfFiveMinute(Timestamp)                   - round up to 5 minutes
+         *   toDateTime(intDiv(toUInt32(Timestamp), 15) * 15) - round up to 15 seconds
          */
     FROM proton.requests;

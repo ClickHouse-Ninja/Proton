@@ -9,13 +9,14 @@ description: "Proton - high performance Pinba storage server."
 vendor: "ClickHouse-Ninja"
 homepage: "https://github.com/ClickHouse-Ninja/Proton"
 license: "MIT"
-bindir: "/opt/proton/bin"
+bindir: "/usr/bin"
 files:
-  ./.build/proton: "/opt/proton/bin/proton-server"
+  ./.build/proton-server: "/usr/bin/proton-server"
 config_files:
-  ./scripts/systemd/proton.service: "/etc/systemd/system/proton-server.service"
+  ./package/etc/proton-server/options: "/etc/proton-server/options"
+  ./package/systemd/proton-server.service: "/etc/systemd/system/proton-server.service"
 overrides:
   deb:
     scripts:
-      postinstall: ./scripts/postinstall.sh
-      preremove: ./scripts/preremove.sh
+      postinstall: ./package/scripts/postinstall.sh
+      preremove: ./package/scripts/preremove.sh

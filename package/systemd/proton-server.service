@@ -6,12 +6,13 @@ After=network-online.target
 [Service]
 Type=simple
 
-ExecStart=/opt/proton/bin/proton-server -addr=":30002" -dsn="native://127.0.0.1:9000" -backlog=10000 -concurrency=2
+EnvironmentFile=/etc/proton-server/options
+ExecStart=/usr/bin/proton-server $OPTIONS
 
 Restart=always
 RestartSec=10
 
-MemoryLimit=500M
+MemoryLimit=200M
 MemoryAccounting=true
 
 [Install]
