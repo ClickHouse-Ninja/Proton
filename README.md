@@ -3,7 +3,7 @@
 # @todo
 - [X] Grafana dashboards [basic reports](examples/grafana/report.json), [Proton Server](examples/grafana/proton-server.json)
 - [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md), [tags reports](examples/reports/tags.md)
-- [ ] [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start)
+- [ ] [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start) [driver issue](https://github.com/kshvakov/clickhouse/issues/153)
 
 # Installation
 
