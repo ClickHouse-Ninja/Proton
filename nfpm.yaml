@@ -1,7 +1,7 @@
 name: "proton-server"
 arch: "amd64"
 platform: "linux"
-version: "v0.1"
+version: "v0.2"
 section: "default"
 priority: "extra"
 maintainer: "Kirill Shvakov <to@clickhouse.ninja>"

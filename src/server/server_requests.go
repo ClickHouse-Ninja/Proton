@@ -3,8 +3,6 @@ package server
 import (
 	"log"
 	"time"
-
-	"github.com/kshvakov/clickhouse"
 )
 
 func (server *server) background() {
@@ -29,17 +27,20 @@ func (server *server) background() {
 				block.WriteFloat32(11, request.GetRuStime())
 				tagName, tagValue := request.tags()
 				{
-					block.WriteArray(12, clickhouse.Array(tagName))
-					block.WriteArray(13, clickhouse.Array(tagValue))
+					block.WriteArray(12, tagName)
+					block.WriteArray(13, tagValue)
 				}
 				// timer
-				block.WriteArray(14, clickhouse.Array(request.GetTimerHitCount))
-				block.WriteArray(15, clickhouse.Array(request.GetTimerValue))
-				block.WriteArray(16, clickhouse.Array(request.GetTimerRuStime))
-				block.WriteArray(17, clickhouse.Array(request.GetTimerRuUtime))
-				// block.WriteArray(18, clickhouse.Array(Array(T))  TagsName @todo add support of Array(Array(T)) to the driver
-				// block.WriteArray(19, clickhouse.Array(Array(T))) TagsValue
-				block.WriteUInt32(18, request.timestamp)
+				block.WriteArray(14, request.TimerHitCount)
+				block.WriteArray(15, request.GetTimerValue())
+				block.WriteArray(16, request.GetTimerRuStime())
+				block.WriteArray(17, request.GetTimerRuUtime())
+				timerTagName, timerTagValue := request.timerTags()
+				{
+					block.WriteArray(18, timerTagName)
+					block.WriteArray(19, timerTagValue)
+				}
+				block.WriteUInt32(20, request.timestamp)
 			case <-tick:
 				break loop
 			}
@@ -72,13 +73,13 @@ const (
 		, Timers.Value
 		, Timers.Utime
 		, Timers.Stime
-		/*, Timers.TagsName
-		, Tiers.TagsValue*/
+		, Timers.TagsName
+		, Timers.TagsValue
 		, Timestamp
 	) VALUES (
 		?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 		?, ?, ?, ?, ?, ?, ?, ?,
-		?
+		?, ?, ?
 	)
 	`
 )

@@ -17,7 +17,7 @@ func main() {
 		device  = []string{"Mobile", "Desktop", "TV"}
 		browser = []string{"Chrome", "FF"}
 	)
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 2; i++ {
 		req := gopinba.Request{
 			Tags: map[string]string{
 				"OS":      os[i%len(os)],
@@ -33,6 +33,24 @@ func main() {
 		req.RequestCount = 1
 		req.RequestTime = 145987 * time.Microsecond
 		req.DocumentSize = 1024
+		{
+			timer := gopinba.TimerStart(map[string]string{"mysql": "server_1", "db_connect": "server_1"})
+			time.Sleep(time.Millisecond * 5)
+			timer.Stop()
+			req.AddTimer(timer)
+		}
+		{
+			timer := gopinba.TimerStart(map[string]string{"mysql": "server_1", "db_connect": "server_1"})
+			time.Sleep(time.Millisecond * 5)
+			timer.Stop()
+			req.AddTimer(timer)
+		}
+		{
+			timer := gopinba.TimerStart(map[string]string{"mysql": "server_1", "postgresql": "server_1"})
+			time.Sleep(time.Millisecond * 5)
+			timer.Stop()
+			req.AddTimer(timer)
+		}
 		err = pc.SendRequest(&req)
 		if err != nil {
 			log.Fatalf("SendRequest() returned error: %v", err)

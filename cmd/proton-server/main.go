@@ -35,7 +35,7 @@ func main() {
 		fmt.Println("NAME:")
 		fmt.Println("  Proton - high performance Pinba storage server.")
 		fmt.Println("VERSION:")
-		fmt.Printf("  0.1 rev[%s] %s (%s UTC).\n", GitCommit, GitBranch, BuildDate)
+		fmt.Printf("  0.2 rev[%s] %s (%s UTC).\n", GitCommit, GitBranch, BuildDate)
 		fmt.Println("USAGE:")
 		flag.PrintDefaults()
 	}

@@ -33,64 +33,64 @@
 			"revisionTime": "2018-11-28T19:23:52Z"
 		},
 		{
-			"checksumSHA1": "Gvxld1l2OJFWlV9AgSquo/etNEI=",
+			"checksumSHA1": "mGv0s/XGIBo5NPTKeNefEPCuiKI=",
 			"path": "github.com/kshvakov/clickhouse",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "f9vKXNe4BAsTz8Vh1mLRJ++T68Q=",
 			"path": "github.com/kshvakov/clickhouse/lib/binary",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "IEFIMD9e65ASRnnI4pAvmu4s3f8=",
 			"path": "github.com/kshvakov/clickhouse/lib/cityhash102",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
-			"checksumSHA1": "YUCgnI/jedEl60M5Qaz98s/vd5s=",
+			"checksumSHA1": "lu1uGcKQm/xQPq0Pq5+0yAzrCLQ=",
 			"path": "github.com/kshvakov/clickhouse/lib/column",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
-			"checksumSHA1": "WjwyvWY3LarX+P2XCnl++Yrp2rA=",
+			"checksumSHA1": "u+gONJuWUKiVBKbY/gNzSv4OXZs=",
 			"path": "github.com/kshvakov/clickhouse/lib/data",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "KU4wHwqDVamUoKaZbrAtrzcKx40=",
 			"path": "github.com/kshvakov/clickhouse/lib/leakypool",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "5jrXVi2ZcS+qO/zsR4/69UrTyx8=",
 			"path": "github.com/kshvakov/clickhouse/lib/lz4",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "ufET0wbq25geHjZiCY3tu4FlLeU=",
 			"path": "github.com/kshvakov/clickhouse/lib/protocol",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
-			"checksumSHA1": "jHl2hR+E4mVq4ovEEVKdgqi9iwk=",
+			"checksumSHA1": "/L0YfHvMrzacG0dcZeDk3GPA82U=",
 			"path": "github.com/kshvakov/clickhouse/lib/types",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "pfzF4zamkyVBOqjDbNA84M1crts=",
 			"path": "github.com/kshvakov/clickhouse/lib/writebuffer",
-			"revision": "1fd26158e61b4d96fa69eee9aa7518ef65854cba",
-			"revisionTime": "2018-12-08T12:50:10Z"
+			"revision": "9331ea5972cb7437b33f5d21368c05efdf4826ca",
+			"revisionTime": "2019-02-19T09:56:05Z"
 		},
 		{
 			"checksumSHA1": "bKMZjd2wPw13VwoE7mBeSv5djFA=",

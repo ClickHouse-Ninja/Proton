@@ -1,1 +1,1 @@
-OPTIONS="-addr=":30002" -dsn="native://127.0.0.1:9000" -backlog=10000 -concurrency=2"
+OPTIONS="-addr=:30002 -dsn=native://127.0.0.1:9000 -backlog=10000 -concurrency=2"
