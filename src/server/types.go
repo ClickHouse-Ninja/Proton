@@ -1,6 +1,8 @@
 package server
 
 import (
+	"sort"
+
 	"github.com/ClickHouse-Ninja/Proton/proto/pinba"
 )
 
@@ -30,6 +32,10 @@ func (req *request) tags() ([]string, []string) {
 			value = append(value, req.Dictionary[int(k)])
 		}
 	}
+	sort.Sort(&tagSort{
+		name:  name,
+		value: value,
+	})
 	return name, value
 }
 
@@ -52,6 +58,10 @@ func (req *request) timerTags() ([][]string, [][]string) {
 		for idx, ln := range req.TimerTagCount {
 			name[idx] = names[start : start+ln]
 			value[idx] = values[start : start+ln]
+			sort.Sort(&tagSort{
+				name:  name[idx],
+				value: value[idx],
+			})
 			start += ln
 		}
 	}
@@ -78,3 +88,18 @@ func (req *request) GetTimerRuUtime() (value []float32) {
 	}
 	return value
 }
+
+type tagSort struct {
+	name, value []string
+}
+
+func (t *tagSort) Len() int { return len(t.name) }
+
+func (t *tagSort) Less(i, j int) bool { return t.name[i] < t.name[j] }
+
+func (t *tagSort) Swap(i, j int) {
+	t.name[i], t.name[j] = t.name[j], t.name[i]
+	t.value[i], t.value[j] = t.value[j], t.value[i]
+}
+
+var _ sort.Interface = (*tagSort)(nil)

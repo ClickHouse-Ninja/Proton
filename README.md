@@ -1,9 +1,8 @@
-# [WIP] Proton - it's a Pinba storage server.
+# Proton - is the new home for your Pinba metrics.
 
-# @todo
-- [X] Grafana dashboards [basic reports](examples/grafana/report.json), [Proton Server](examples/grafana/proton-server.json)
-- [X] reports (materialized views and queries) [basic reports](examples/reports/basic.md), [tags reports](examples/reports/tags.md)
-- [X] [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start)
+-  Grafana dashboards [basic reports](examples/grafana/report.json), [Proton Server](examples/grafana/proton-server.json)
+-  reports (materialized views and queries) [basic reports](examples/reports/basic.md), [tags reports](examples/reports/tags.md)
+-  [timers](https://github.com/tony2001/pinba_engine/wiki/PHP-extension#pinba_timer_start)
 
 # Installation
 
