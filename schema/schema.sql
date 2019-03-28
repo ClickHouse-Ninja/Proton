@@ -28,9 +28,16 @@ CREATE TABLE IF NOT EXISTS proton.requests (
     , Timestamp DateTime
 ) Engine = MergeTree
 PARTITION BY toYYYYMM(Timestamp)
-ORDER     BY (
+PRIMARY   KEY (
     Schema
-    , toStartOfMinute(Timestamp)
+    , toStartOfHour(Timestamp)
+)
+ORDER BY (
+    Schema
+    , toStartOfHour(Timestamp)
+    , Hostname
+    , ServerName
+    , ScriptName
 );
 
 CREATE TABLE IF NOT EXISTS proton.dictionary (

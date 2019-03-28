@@ -28,6 +28,11 @@ CREATE TABLE IF NOT EXISTS proton.base_report (
     , Timestamp                DateTime
 ) Engine SummingMergeTree
 PARTITION BY toYYYYMM(Timestamp)
+PRIMARY KEY (
+    Schema
+    , Timestamp
+    , Status
+)
 ORDER BY (
     Schema
     , Timestamp

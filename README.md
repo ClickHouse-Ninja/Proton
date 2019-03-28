@@ -65,24 +65,32 @@ Example:
 </dictionaries>
 ```
 
+### Download [latest](https://github.com/ClickHouse-Ninja/Proton/releases) Proton server
+
+And run it.
+
 # Usage:
 
 ```
 NAME:
   Proton - high performance Pinba storage server.
 VERSION:
-  0.1 rev[9ef1982] master (2019-01-08.18:24:30 UTC).
+  0.2 rev[f2e5ae4] master (2019-03-20.12:40:46 UTC).
 USAGE:
   -addr string
-        listen address (default ":30002")
+      listen address (default ":30002")
   -backlog int
-        backlog size (default 100000)
+      backlog size (default 10000)
   -concurrency int
-        number of the background processes (default 2)
+      number of the background processes (default 2)
   -dsn string
-        ClickHouse DSN (default "native://127.0.0.1:9000")
+      ClickHouse DSN (default "native://127.0.0.1:9000")
   -metrics_addr string
-        Address on which to expose metrics (default ":2112")
+      address on which to expose metrics (default ":2112")
+  -pprof string
+      pprof address. If set to start the pprof server
 ```
+
+If you are using the `deb` package, change the startup options in `/etc/proton-server/options`.
 
 ![Grafana basic reports](/assets/grafana-basic-reports.png)
